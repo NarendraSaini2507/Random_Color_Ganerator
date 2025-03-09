@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>random color ganerator</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .main{
+            /* width: 100vw;
+            height: 100vh; */
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+        }
+        .box{
+            width: 20%;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        .overlay{
+            width: 100vw;
+            height: 100vh;
+            background-color: red;
+            position: fixed;
+            transform: scale(0);
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+
+    </div>
+    <div class="main">
+        <!-- <div class="box">
+
+        </div> -->
+    </div>
+
+    <script>
+
+        var main = document.querySelector('.main');
+
+        function getColorCode(){
+            var red = Math.floor(Math.random()*256).toString(16);
+            var green = Math.floor(Math.random()*256).toString(16);
+            var blue = Math.floor(Math.random()*256).toString(16);
+            var code = '#' + red + green + blue;
+            if(code.length==7){
+                return code;
+            }
+            else{
+                return getColorCode();
+            }
+            
+        }
+        
+
+        for(var i = 1; i<=25; i++){
+         var finalCode = getColorCode(); 
+        var div = document.createElement('div');
+        div.classList.add('box')
+        div.style.background = finalCode;
+        div.innerText = finalCode;
+        main.append(div)
+        }
+
+        var boxes = document.querySelectorAll('.box');
+        var overlay = document.querySelector('.overlay')
+        for(var boxItem of boxes){
+            boxItem.addEventListener('click', function(){
+                overlay.style.transform = 'scale(1)'
+                overlay.style.background = this.innerText;
+                overlay.innerText = this.innerText;
+                navigator.clipboard.writeText(this.innerText);
+
+                setTimeout(function(){
+                    overlay.style.transform = 'scale(0)'
+                }, 500)
+            })
+        }
+       
+        
+        // var num = Math.random()*100;
+        // console.log(Math.floor(num))
+    </script>
+</body>
+</html>
